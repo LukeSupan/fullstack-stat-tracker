@@ -16,12 +16,12 @@ from collections import defaultdict
 # luke(mvp),aiden/mar/kayla/win
 # in this case, luke is the mvp.
 # i treat mvp and svp the same, just say mvp. you can see the win loss ratio for mvps
-# THIS IS ALL IN THE README. ITS JUST ALSO HERE TO BE SAFE
+# THIS AND MORE IS ALL IN THE README.
 
 
 
 # open the formatted file (look in README to generate)
-with open("games.txt") as f:
+with open("games.txt") as f: # CHANGE games.txt TO MATCH YOUR TEXT FILE. GAMES.TXT IS JUST MY CHOICE
     games = [line.strip() for line in f if line.strip()]
 
 
