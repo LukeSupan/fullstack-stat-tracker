@@ -2,19 +2,7 @@ from collections import defaultdict
 
 # MUST BE FORMATTED AS FOLLOWS:
 # tank,tank2/dps1,dps2/support1,support2/win(orloss)
-# you dont need to fill every slot. use none when you dont have someone you know
-# examples:
-# luke/mar/kayla/win
-# none/mar/kayla/loss
-# none/luke,mar/kayla/win
-# luke,mar/aiden,ray/kayla,dalton/win
-# comments are separators for multiple players in a role
-# slashes are separators for different roles
-# if you are playing marvel rivals or want to add a mvp for whatever reason:
-# luke(mvp),aiden/mar/kayla/win
-# in this case, luke is the mvp.
-# i treat mvp and svp the same, just say mvp. you can see the win loss ratio for mvps
-# THIS AND MORE IS ALL IN THE README.
+# clear explanation and examples are in README, mvp is entirely optional
 
 
 
@@ -79,22 +67,49 @@ def parse_game(line):
 
 
 # helper function for printing
+# result is winrate
 def winrate(wins, games):
     return (wins / games * 100) if games else 0
 
 
 
-# TODO, extract_players for non role specific winrates
+# extract players for non role specific winrates
+# result is the set of the comp to be updated
+def extract_players(team):
+    players = set()
+
+    # for each slot of value, split if needed and add to the players set
+    for slot in team.values():
+        if slot != "none":
+            for names in slot.split(","):
+                name, _ = parse_name(names) # we arent using is_mvp here. hence _
+                players.add(name)
+    return players
+
+# get the key of the role comp to be updated
+def get_role_comp_key(team):
+    players = [] # players like above but as a list. so it matters 
+
+    # we need to get member for tank, dps, and support, just like before. sort each slot alphabetically so it doesnt matter
+    for role in ("tank", "dps", "support"):
+        slot = team[role] # check each slot
+        if slot == "none":
+            players.append(f"{role}:none") # this role is empty
+        else:
+            sorted_players = sorted(slot.split(",")) # split the slot at the ',' and sort the players alphabetically to get one consistent key
+            names = ", ".join(sorted_players) # rejoin the list back into a string with a comma (with a space to look better), basically just makes sure we have no duplicate role comp
+            players.append(f"{role}:{names}") # add the final string to the list
+        return " | ".join(players) # make one final string by joining with |
 
     
 
 # || AGGREGATION
 # for each game, add relevant stats
 for line in games:
-    roles, result = parse_game(line)
+    team, result = parse_game(line)
 
     # add stats for each player from the current game
-    for role, names in roles.items():
+    for role, names in team.items():
         if names == "none":
             continue
 
@@ -118,6 +133,20 @@ for line in games:
                 player_stats[name]["mvplosses"] += is_mvp # add 1 if true, 0 if false to mvpwins
 
 
+    # for this game, adjust the comp stats
+    comp_key = tuple(sorted(extract_players(team))) # sort the set, make it a tuple so that we can use it as a key
+    comp_stats[comp_key]["games"] += 1
+
+    if result == "win":
+        comp_stats[comp_key]["wins"] += 1
+    else:
+        comp_stats[comp_key]["losses"] += 1
+
+
+        # for this game, adjust the role comp stats
+
+
+
 # || PRINTING
 # print individual players stats
 for player, stats in sorted(player_stats.items()):
@@ -126,7 +155,7 @@ for player, stats in sorted(player_stats.items()):
     print(f"  DPS:     {stats['dpswins']}W / {stats['dpslosses']}L")
     print(f"  Support: {stats['supportwins']}W / {stats['supportlosses']}L")
     print(f"  Overall: {stats['wins']}W / {stats['losses']}L")
-    print(f"  Winrate: {winrate(stats['losses'],stats['wins']):.1f}%") # colon here is a format specifier. just set to 1 decimal point
+    print(f"  Winrate: {winrate(stats['wins'],stats['games']):.1f}%") # colon here is a format specifier. just set to 1 decimal point
 
     # im making it so mvp only prints if they have mvp stats. overwatch players have zero use for it.
     if stats['mvps'] > 0:
@@ -134,8 +163,10 @@ for player, stats in sorted(player_stats.items()):
         print(f"    MVP Ratio: {stats['mvpwins']}W / {stats['mvplosses']}L")
 
 
-
-
 # print non role comps (2 or more) to avoid some clutter, 1 is reasonable if you want to change this. i just prefer less clutter and who cares about 1 game.
+print("\n===== NON-ROLE-BASED COMPS =====")
+print(f"{comp_stats}")
+
+
 
 # print role comps (3 or more) would be really cluttered with less
