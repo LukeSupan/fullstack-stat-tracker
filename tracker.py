@@ -1,21 +1,19 @@
 from collections import defaultdict
 
-# I AM GOING TO EXTREMELY OVEREXPLAIN THE CODE IN THESE COMMENTS
-# I WANT ANYONE TO BE ABLE TO EDIT THIS HOWEVER THEY WOULD LIKE.
-# I FOUND MYSELF MAKING A TON OF SMALL TWEAKS TO VIEW THE DATA DIFFERENTLY WHILE USING IT MYSELF
-# IT WILL BE SOME WORK TO READ THROUGH. HOWEVER, I BELIEVE IN YOU.
+# it is very entertaining (and useful) to tweak a lot of this stuff to see different results.
+# if you read through this you should be able to make some changes. i tried to make it clear.
+# the README explains how to use this best
 
-# MUST BE FORMATTED AS FOLLOWS:
+# EACH LINE IN FILE MUST BE FORMATTED AS FOLLOWS:
 # tank,tank2/dps1,dps2/support1,support2/win(orloss)
 # change file name below. a clear explanation and examples are in README, mvp is entirely optional
 #            |
 #            |
 #            V
 # --------------------------
-# INPUT FILE (what you are looking for most likely)
+# INPUT FILE
 # --------------------------
-# open the formatted file (look in README to generate)
-with open("games.txt") as f: # CHANGE games.txt TO MATCH YOUR TEXT FILE. GAMES.TXT IS JUST MY CHOICE
+with open("deadlock.txt") as f: # (change the name of "games.txt" here to your text document)
     games = [line.strip() for line in f if line.strip()]
 
 
@@ -52,7 +50,12 @@ def make_role_comp():
 
 # defaultdict automatically intitializes new keys when they appear
 # create dicts to save multiple players/comps
-# data storing is setup. parse next
+
+# defaultdict calls the given function automatically
+# whenever a new key is accessed.
+#
+# example:
+#   player_stats["luke"]  -> make_player() is called automatically
 player_stats = defaultdict(make_player)
 comp_stats = defaultdict(make_comp)
 role_comp_stats = defaultdict(make_role_comp)
