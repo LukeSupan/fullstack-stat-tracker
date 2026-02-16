@@ -4,20 +4,18 @@
 # you can see most of these things on tracking sites. but you can control the data here
 # theres also all that other stuff
 
-def make_player(roles):
-    player = {
+from collections import defaultdict
+
+
+def make_player():
+    return{
+        "roles": defaultdict(lambda: {"wins": 0, "losses": 0}), # makes roles as they are added.
         "wins": 0, "losses": 0, "games": 0,
         "mvps": 0, "mvpwins": 0, "mvplosses": 0,
         "roles": {}
     }
 
-    # make roles for the specific game
-    for role in roles:
-        player["roles"][role] = {
-            "wins": 0, "losses": 0, "games": 0
-    }
-        
-    return player
+
 
 
 # make a new comp. these dont consider the roles of the team at all

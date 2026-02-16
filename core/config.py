@@ -1,5 +1,5 @@
 GAME_CONFIGS = {
-    "heroshooter": ["tank", "dps", "support"],
+    "hero_shooter": ["tank", "dps", "support"],
     "deadlock": ["left", "mid", "right"],
     "aram": ["players"]
 }

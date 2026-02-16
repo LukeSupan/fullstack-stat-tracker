@@ -4,19 +4,18 @@
 # if you need help, ask me, if you have something you think should be added let me know.
 
 from games.hero_shooter import run as run_hero_shooter # overwatch, marvel rivals, anything like that
-# from games.deadlock import run as run_deadlock # could include other games with 3 lanes
-# from games.aram import run as run_aram # also includes deadlock street brawl
+# from games.deadlock import run as run_deadlock # could include other games with 3 lanes TODO
+# from games.aram import run as run_aram # also includes deadlock street brawl TODO
 GAME_RUNNERS = {
     "heroshooter": run_hero_shooter,
-    # "deadlock": run_deadlock,
-    # "aram": run_aram
+    # "deadlock": run_deadlock, TODO
+    # "aram": run_aram TODO
 }
 
-
-
-# THIS IS WHERE YOU CHANGE THE FILE NAME!
-with open("games.txt") as f: # (change the name of "games.txt" here to your specific text document)
+# THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
+with open("games.txt") as f:
     lines = [line.strip() for line in f if line.strip()]
+
 
 game_name = lines[0].lower()
 games = lines[1:]

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from core.models import make_player, make_comp, make_role_comp
 from core.parsing import parse_name_and_mvp, parse_game_line
+from core.config import GAME_CONFIGS
 
 # --------------------------
 # PROCESSING FUNCTIONS
@@ -83,6 +84,8 @@ def role_comp_team_size(role_comp_key):
 
 def run(games):
     player_stats = defaultdict(make_player)
+    roles = GAME_CONFIGS.get("hero_shooter") # TODO, put this in engine maybe? not sure how much of this repeatable
+
     comp_stats = defaultdict(make_comp)
     role_comp_stats = defaultdict(make_role_comp)
 
