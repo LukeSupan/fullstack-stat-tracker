@@ -6,15 +6,16 @@
 
 from collections import defaultdict
 
-
+# role 1 will be used if just 1, kinda wasteful, not a big deal for this though
+# might fix. its not worth it for now
 def make_player():
     return{
-        "roles": defaultdict(lambda: {"wins": 0, "losses": 0}), # makes roles as they are added.
+        "role1wins": 0, "roles2wins": 0, "role3wins": 0,
+        "role1losses": 0, "roles2losses": 0, "role3losses": 0,
         "wins": 0, "losses": 0, "games": 0,
         "mvps": 0, "mvpwins": 0, "mvplosses": 0,
         "roles": {}
     }
-
 
 
 

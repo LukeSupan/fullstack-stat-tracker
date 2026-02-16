@@ -7,7 +7,7 @@ from games.hero_shooter import run as run_hero_shooter # overwatch, marvel rival
 # from games.deadlock import run as run_deadlock # could include other games with 3 lanes TODO
 # from games.aram import run as run_aram # also includes deadlock street brawl TODO
 GAME_RUNNERS = {
-    "heroshooter": run_hero_shooter,
+    "hero_shooter": run_hero_shooter,
     # "deadlock": run_deadlock, TODO
     # "aram": run_aram TODO
 }

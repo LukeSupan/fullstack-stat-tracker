@@ -84,7 +84,7 @@ def role_comp_team_size(role_comp_key):
 
 def run(games):
     player_stats = defaultdict(make_player)
-    roles = GAME_CONFIGS.get("hero_shooter") # TODO, put this in engine maybe? not sure how much of this repeatable
+    roles = GAME_CONFIGS.get("hero_shooter") # TODO make this work
 
     comp_stats = defaultdict(make_comp)
     role_comp_stats = defaultdict(make_role_comp)
