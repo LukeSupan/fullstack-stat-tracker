@@ -1,10 +1,13 @@
 # Hero Shooter Stat Tracker
-This was designed with **Overwatch** and **Marvel Rivals** in mind. (Currently being updated for Deadlock)
->I'd recommend not combining the two games in your doc. If you play both have one for MR and one for Overwatch. The MVP stat is pretty much lost when you do that.
+This currently works best for Overwatch(hero_shooter tag as your first line), Marvel Rivals (same thing), and Deadlock(lanes as your tag). I'm currently working on adding street brawl.
+The next update will add pretty much every game without roles; it's probably the most important.
+>I'd recommend not combining the two hero shooters in your doc. If you play both, have one for MR and one for Overwatch. The MVP stat is essentially lost when you do that.
 ---
 
 
 ## Match Entry Formatting:
+Your first line should always be either "lanes" for deadlock or "hero_shooter" for overwatch and marvel rivals.
+
 ```
 tank,tank2/dps1,dps2/support1,support2/win(orloss)
 ```
