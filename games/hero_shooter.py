@@ -23,4 +23,4 @@ def run(games):
     # printing final results
     print_player_stats(player_stats, role_labels)
     print_non_role_comps(comp_stats, 1) # TODO REPLACE WITH DECLARED NUMBER FOR EASY CHANGE, would be cool to let user do it with the input file, might be complicated so ill make it optional, 1 and 3 are default
-    print_role_comps(role_comp_stats, 3) # TODO REPLACE WITH DECLARED NUMBER FOR EASY CHANGE, would be cool to let user do it with the input file, might be complicated so ill make it optional, 1 and 3 are default
+    print_role_comps(role_comp_stats, role_labels, 3) # TODO REPLACE WITH DECLARED NUMBER FOR EASY CHANGE, would be cool to let user do it with the input file, might be complicated so ill make it optional, 1 and 3 are default

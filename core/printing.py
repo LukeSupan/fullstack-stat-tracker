@@ -1,4 +1,7 @@
 from core.utils import winrate, sized_comps_sort_key, role_comp_team_size
+from colorama import init, Fore, Back, Style
+
+init(autoreset=True)  # auto-reset after each print
 
 # --------------------------
 # PRINTING
@@ -60,10 +63,10 @@ def print_non_role_comps(comp_stats, min_games=1):
 
 
 # TODO, make it work for deadlock, it prints the roles right now, no good, oh might be good, no not good
-def print_role_comps(role_comp_stats, min_games=3):
+def print_role_comps(role_comp_stats, role_labels, min_games=3):
     # print role comps (3 or more) would be really cluttered with less
     # i also like this one. you can see who is weak on what. gotta play more though
-    # proccess is super similar to above, but role_comps have a function to get the size instead.
+    # process is super similar to above, but role_comps have a function to get the size instead.
     print("\n===== ROLE-BASED COMPS =====")
 
     # print in order of smallest to largest team size first
@@ -85,9 +88,23 @@ def print_role_comps(role_comp_stats, min_games=3):
             continue
         
         print(f"\n----- {size}-PLAYER COMPS -----")
+        print(f"{Style.BRIGHT}{role_labels[0]:10}{role_labels[1]:10}{role_labels[2]:10}")
 
         # we have the comps for this size, print them nicely
-        sized_role_comps.sort(key=sized_comps_sort_key, reverse=True)
+
         for role_comp, stats in sized_role_comps:
-            print(f"{role_comp:50} {winrate(stats['wins'], stats['games']):5.1f}% ({stats['games']} games)")
+
+            print_list = []
+            # split by /'s for roles, print title for each
+            slots = role_comp.split("/")
+            for label, slot in zip(role_labels, slots):
+                if slot:
+                    print_list.append(f"{label}: {slot}")
+                else:
+                    print_list.append(f"{label}: none")
+
+            role_comp_print = " / ".join(print_list)
+            print(f"{role_comp_print:50} {winrate(stats['wins'], stats['games']):5.1f}% ({stats['games']} games)")
+
+    return
             

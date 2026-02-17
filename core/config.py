@@ -5,7 +5,7 @@
 # anytime i add a new game, i can easily add roles here
 # used for the printing once data is computed
 GAME_CONFIGS = {
-    "hero_shooter": ["tank", "dps", "support"],
+    "hero_shooter": ["Tank", "Dps", "Support"],
     "lanes": ["left", "mid", "right"],
     "generic": ["players"]
 }

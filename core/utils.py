@@ -39,7 +39,7 @@ def get_role_comp_key(team):
         slot = team[role]  # check each slot
 
         if slot == "none":
-            continue  # this role is empty nothing else to do here
+            players.append("")  # this role is empty nothing else to do here
 
         else:
             # before adding them to the key we need to get rid of mvp,
@@ -53,7 +53,7 @@ def get_role_comp_key(team):
             sorted_players = sorted(clean_names)
 
             # add the final string to its slot in the list
-            players.append(",".join(sorted_players))
+            players.append(", ".join(sorted_players))
 
     # make one final string by joining with /
     return "/".join(players)
@@ -69,6 +69,6 @@ def role_comp_team_size(role_comp_key):
     for slot in slots:
         names = slot.strip()
         if names != "none":
-            for name in names.split(","):
+            for name in names.split(", "):
                 players.add(name)
     return len(players)
