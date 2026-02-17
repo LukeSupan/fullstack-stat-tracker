@@ -4,21 +4,24 @@
 # if you need help, ask me, if you have something you think should be added let me know.
 
 from games.hero_shooter import run as run_hero_shooter # overwatch, marvel rivals, anything like that
+from games.lanes import run as run_lanes
 # from games.deadlock import run as run_deadlock # could include other games with 3 lanes TODO
 # from games.generic import run as run_generic # this is all generic games with no roles. less info but, it does the job
 GAME_RUNNERS = {
     "hero_shooter": run_hero_shooter,
     # "generic": run_generic, TODO 
-    # "lanes": run_lanes, TODO
+    "lanes": run_lanes
 }
 
+
 # THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
-with open("games.txt") as f:
+with open("deadlock.txt") as f:
     lines = [line.strip() for line in f if line.strip()]
 
 
-game_name = lines[0].lower()
+game_name = lines[0].lower().strip()
 games = lines[1:]
+
 
 # decide which game to run
 runner = GAME_RUNNERS.get(game_name)

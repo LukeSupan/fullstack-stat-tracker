@@ -29,6 +29,17 @@ def print_non_role_comps(comp_stats, min_games=1):
     # print non role comps (2 or more) to avoid some clutter, 1 is reasonable if you want to change this. i just prefer less clutter and who cares about 1 game.
     # this is one of the most interesting parts. you can see who is weak. and strong i suppose
     # TODO make this print only if it should (same with ROLE BASED COMPS. this should always print though, just for if someone changes the value down there so it doesnt)
+
+    # if any of these statements are false, do not print the header. with the default value it always, but if its changed it may not.
+    has_data = any(
+        stats["games"] >= min_games
+        for stats in comp_stats.values()
+    )
+
+    if not has_data:
+        return
+
+
     print("\n\n===== NON-ROLE-BASED COMPS =====")
 
     # print in order of smallest to largest team size first
@@ -67,6 +78,16 @@ def print_role_comps(role_comp_stats, role_labels, min_games=3):
     # print role comps (3 or more) would be really cluttered with less
     # i also like this one. you can see who is weak on what. gotta play more though
     # process is super similar to above, but role_comps have a function to get the size instead.
+
+    # if any of these statements are false, do not print the header
+    has_data = any(
+        stats["games"] >= min_games
+        for stats in role_comp_stats.values()
+    )
+
+    if not has_data:
+        return
+
     print("\n===== ROLE-BASED COMPS =====")
 
     # print in order of smallest to largest team size first
@@ -86,12 +107,22 @@ def print_role_comps(role_comp_stats, role_labels, min_games=3):
         # if its empty, we dont print the title card and move on
         if not sized_role_comps:
             continue
+
+        # sort by winrate (highest first), then by number of games (highest first as tiebreaker)
+        sized_role_comps.sort(key=sized_comps_sort_key, reverse=True)
+
+
         
         print(f"\n----- {size}-PLAYER COMPS -----")
-        print(f"{Style.BRIGHT}{role_labels[0]:10}{role_labels[1]:10}{role_labels[2]:10}")
+        header = " / ".join([
+            f"{role_labels[0]}",
+            f"{role_labels[1]}",
+            f"{role_labels[2]}"
+        ])
+
+        print(f"{Style.BRIGHT}{header:30}{Style.RESET_ALL}")
 
         # we have the comps for this size, print them nicely
-
         for role_comp, stats in sized_role_comps:
 
             print_list = []
@@ -99,12 +130,12 @@ def print_role_comps(role_comp_stats, role_labels, min_games=3):
             slots = role_comp.split("/")
             for label, slot in zip(role_labels, slots):
                 if slot:
-                    print_list.append(f"{label}: {slot}")
+                    print_list.append(f"{slot}")
                 else:
-                    print_list.append(f"{label}: none")
+                    print_list.append(f"none")
 
             role_comp_print = " / ".join(print_list)
-            print(f"{role_comp_print:50} {winrate(stats['wins'], stats['games']):5.1f}% ({stats['games']} games)")
+            print(f"{role_comp_print:30} {winrate(stats['wins'], stats['games']):5.1f}% ({stats['games']} games)")
 
     return
             
