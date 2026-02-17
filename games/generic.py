@@ -3,11 +3,8 @@ from core.aggregation import update_comp_stats, update_player_stats_generic
 from core.models import make_player, make_comp
 from core.parsing import parse_game_line_generic
 from core.printing import print_non_role_comps, print_player_stats_generic
-from core.config import GAME_CONFIGS
 
 def run(games):
-
-    role_labels = GAME_CONFIGS["generic"]
     player_stats = defaultdict(make_player)
     comp_stats = defaultdict(make_comp)
 
@@ -17,7 +14,7 @@ def run(games):
 
         # update_player_stats_generic(player_stats, team, result) # each player
         update_player_stats_generic(player_stats, team, result)
-        update_comp_stats(comp_stats, team, result) # each comp, regardless of role
+        update_comp_stats(comp_stats, team, result) # each comp, there are no roles in generic
 
     # printing final results
     print_player_stats_generic(player_stats)

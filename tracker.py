@@ -16,7 +16,7 @@ GAME_RUNNERS = {
 
 
 # THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
-with open("aram.txt") as f:
+with open("generic.txt") as f:
     lines = [line.strip() for line in f if line.strip()]
 
 
