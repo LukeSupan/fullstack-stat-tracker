@@ -1,3 +1,5 @@
+import sys
+
 # the README explains how to use this in depth. look there first
 # it is very entertaining (and useful) to tweak a lot of this stuff to see different results.
 # if you have some python experience i would recommend doing it.
@@ -27,15 +29,18 @@ GAME_RUNNERS = {
     "moba": run_moba
 }
 
-
-# THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
-with open("games.txt") as f:
-    lines = [line.strip() for line in f if line.strip()]
-
+# if no cmd argument
+if len(sys.argv) < 2:
+    with open("input/pingpong.txt") as f:
+        lines = [line.strip() for line in f if line.strip()]
+# if cmd line argument
+else:
+    file_name = sys.argv[1]
+    with open(file_name) as f:
+        lines = [line.strip() for line in f if line.strip()]
 
 game_name = lines[0].lower().strip()
 games = lines[1:]
-
 
 # decide which game to run
 runner = GAME_RUNNERS.get(game_name)
