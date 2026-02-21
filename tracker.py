@@ -29,7 +29,7 @@ GAME_RUNNERS = {
 
 
 # THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
-with open("input/rocketleagueversus.txt") as f:
+with open("games.txt") as f:
     lines = [line.strip() for line in f if line.strip()]
 
 
