@@ -38,11 +38,19 @@ def comp_sort_key(comp_stats):
     )
 # sort by games played (desc), then by team1 winrate
 def matchup_sort_key(matchup_stats):
-    _, stats = matchup_stats
-    return (
-        winrate(stats["team1wins"], stats["games"]),
-        stats["games"]
-    )
+    matchup, stats = matchup_stats
+
+    # calculate winrate per team
+    winrates = [
+        stats["wins"][team] / stats["games"] if stats["games"] > 0 else 0
+        for team in matchup
+    ]
+
+    max_winrate = max(winrates)  # or avg(winrates) if you prefer
+    games_played = stats["games"]
+
+    # sort by max_winrate first, then games played
+    return (max_winrate, games_played)
 
 # generate a string as a key for a role-based comp
 # gets rid of MVP, sorts alphabetically per role, then joins the roles with a /. making a final string key

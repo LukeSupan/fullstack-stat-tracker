@@ -15,23 +15,26 @@ def run(games):
     # aggregate stats for generic versus games
     for line in games:
 
-        teams = line.split("|")
+        teams_split = line.split("|")
 
         # SPLIT THE TEAMS AND CALL EACH FUNCTION TWICE, EASY WAY TO START, ADD MATCHUPS ONCE THAT WORKS?
         # return should be, losing team, winning team, then we can easily pass the result 
-        team1, result1 = parse_game_line_roles(teams[0], role_labels)
-        team2, result2 = parse_game_line_roles(teams[1], role_labels)
+        
+        teams_list = []
+        results_list = []
 
-        # run first team
-        update_player_stats(player_stats, team1, result1) # each player
-        update_comp_stats(comp_stats, team1, result1) # each comp, regardless of role
+        for team in teams_split:
+            team_roles, result = parse_game_line_roles(team, role_labels)
+            teams_list.append(team_roles)
+            results_list.append(result)
 
-        # run second team
-        update_player_stats(player_stats, team2, result2) # each player
-        update_comp_stats(comp_stats, team2, result2) # each comp, regardless of role
+        # process the teams dynamically so there can be any number of words
+        for team, result in zip(teams_list, results_list):
+            update_player_stats(player_stats, team, result)
+            update_comp_stats(comp_stats, team, result)
 
-        # update matchups, we have team1, team2, and the results, so, cool! (result 1 is used for calculation)
-        update_matchup_stats(matchup_stats, team1, team2, result1)
+        # update matchups
+        update_matchup_stats(matchup_stats, teams_list, results_list)
 
     # printing final results
     print_player_stats(player_stats, role_labels)

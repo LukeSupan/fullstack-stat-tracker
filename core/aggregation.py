@@ -88,32 +88,31 @@ def update_role_comp_stats(role_comp_stats, team, result, role_labels):
 
     return
 
-# update the current team comp, not caring about roles
-# does not return anything, updates comp_stats directly
-def update_matchup_stats(matchup_stats, team1, team2, result):
-    comp1_key = tuple(sorted(extract_players(team1))) # sorts a tuple of players to use as key
-    comp2_key = tuple(sorted(extract_players(team2))) # sorts a tuple of players to use as key
-    team1_won = (result == "win") # convert to boolean
 
-    # we need consistency in which team is which, this gets that
-    if comp1_key <= comp2_key:
-        matchup_key = (comp1_key, comp2_key)
-        team1_is_left = True
-    else:
-        matchup_key = (comp2_key, comp1_key)
-        team1_is_left = False
+# update the matchup_stats
+def update_matchup_stats(matchup_stats, teams_list, results_list):
+    # team data will be a list of tuples: (comp_key, result)
+    team_data = []
 
-    # team1's result is measured by default, so if we switch it goes to the opposite
-    if not team1_is_left:
-        team1_won = not team1_won
+    # combine list of teams with their respective results
+    # make list of 2-tuple in team_data
+    for team, result in zip(teams_list, results_list):
+        # make sure extract_players returns a list of names
+        comp_key = tuple(sorted(extract_players(team)))
+        team_data.append((comp_key, result))
 
+    # sort by comp_key for canonical matchup_key
+    team_data.sort(key=lambda x: x[0])
+
+    # matchup key is a tuple of all comp keys
+    matchup_key = tuple(comp_key for comp_key, _ in team_data)
+
+    # add games
     matchup_stats[matchup_key]["games"] += 1
-    
-    if team1_won:
-        matchup_stats[matchup_key]["team1wins"] += 1
-        matchup_stats[matchup_key]["team2losses"] += 1
-    else:
-        matchup_stats[matchup_key]["team2wins"] += 1
-        matchup_stats[matchup_key]["team1losses"] += 1
 
-    return
+    # add wins and losses
+    for comp_key, result in team_data:
+        if result.lower() == "win":
+            matchup_stats[matchup_key]["wins"][comp_key] += 1
+        else:
+            matchup_stats[matchup_key]["losses"][comp_key] += 1

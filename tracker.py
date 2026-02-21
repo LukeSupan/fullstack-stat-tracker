@@ -17,16 +17,19 @@ from games.hero_shooter_versus import run as run_hero_shooter_versus
 GAME_RUNNERS = {
     "hero_shooter": run_hero_shooter,
     "hero_shooter_versus": run_hero_shooter_versus,
+
     "generic": run_generic,
     "generic_versus": run_generic_versus,
+
     "lanes": run_lanes,
     "lanes_detailed": run_lanes_detailed,
+
     "moba": run_moba
 }
 
 
 # THIS IS WHERE YOU CHANGE THE FILE NAME! CHANGE 
-with open("input/rocketleague.txt") as f:
+with open("input/rocketleagueversus.txt") as f:
     lines = [line.strip() for line in f if line.strip()]
 
 

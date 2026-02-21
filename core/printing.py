@@ -203,17 +203,18 @@ def print_matchups(matchup_stats, min_games=1):
         if stats["games"] >= min_games
     ]
 
-    filtered.sort(key=matchup_sort_key, reverse=True)
+    # after filtering, sort each matchup by games played
+    filtered.sort(key=lambda item: item[1]["games"], reverse=True)
 
-    for (team1, team2), stats in filtered:
+    # print matchups
+    for teams, stats in filtered:
 
-        team1_names = ", ".join(team1)
-        team2_names = ", ".join(team2)
+        # get the team names, wins, and losses for each team
+        team_names = [", ".join(team) for team in teams]
+        team_wins = [stats["wins"][team] for team in teams]
 
-        t1w = stats["team1wins"]
-        t2w = stats["team2wins"]
-        games = stats["games"]
-        
-        print(f"{Style.BRIGHT}{team1_names}{Style.RESET_ALL}: {t1w}W\n  VS")
-        print(f"{Style.BRIGHT}{team2_names}{Style.RESET_ALL}: {t2w}W")
-        print(f"    Total games: {games}\n")
+        # join the team names with vs
+        print(" vs ".join(team_names))
+        print("Record:", team_wins)
+        print("Total Games:", stats["games"])
+        print()
