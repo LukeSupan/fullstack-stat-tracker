@@ -1,4 +1,3 @@
 *.txt
 tempCodeRunnerFile.py
 __pycache__/
-!requirements.txt

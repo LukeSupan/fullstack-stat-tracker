@@ -1,4 +1,7 @@
 import sys
+import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
 # the README explains how to use this in depth. look there first
 # it is very entertaining (and useful) to tweak a lot of this stuff to see different results.
@@ -29,15 +32,25 @@ GAME_RUNNERS = {
     "moba": run_moba
 }
 
-# if no cmd argument
+# tkinter file selector
 if len(sys.argv) < 2:
-    with open("input/pingpong.txt") as f:
-        lines = [line.strip() for line in f if line.strip()]
-# if cmd line argument
+    root = tk.Tk()
+    root.withdraw()
+    file_name = filedialog.askopenfilename(
+        title="select the formatted text file",
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+    )
+    if not file_name:
+        messagebox.showinfo("cancelled", "you didnt pick anything")
+        sys.exit()
 else:
     file_name = sys.argv[1]
-    with open(file_name) as f:
-        lines = [line.strip() for line in f if line.strip()]
+
+if not os.path.isfile(file_name):
+    raise FileNotFoundError(f"No file found at {file_name}")
+
+with open(file_name) as f:
+    lines = [line.strip() for line in f if line.strip()]
 
 game_name = lines[0].lower().strip()
 games = lines[1:]
@@ -50,3 +63,6 @@ if not runner:
 
 # get output
 runner(games)
+
+# wait for user to close window
+input("\nPress Enter to exit...")
