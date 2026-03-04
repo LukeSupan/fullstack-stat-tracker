@@ -13,6 +13,8 @@ from games.generic_versus import run as run_generic_versus
 from games.moba import run as run_moba
 from games.lanes_detailed import run as run_lanes_detailed
 from games.hero_shooter_versus import run as run_hero_shooter_versus
+from games.one_vs_one import run as run_one_vs_one
+
 
 # from games.deadlock import run as run_deadlock # could include other games with 3 lanes TODO
 # from games.generic import run as run_generic # this is all generic games with no roles. less info but, it does the job
@@ -26,12 +28,14 @@ GAME_RUNNERS = {
     "lanes": run_lanes,
     "lanes_detailed": run_lanes_detailed,
 
-    "moba": run_moba
+    "moba": run_moba,
+
+    "one_vs_one": run_one_vs_one,
 }
 
 # if no cmd argument
 if len(sys.argv) < 2:
-    with open("input/pingpong.txt") as f:
+    with open("input/pingpongnoparents.txt") as f:
         lines = [line.strip() for line in f if line.strip()]
 # if cmd line argument
 else:

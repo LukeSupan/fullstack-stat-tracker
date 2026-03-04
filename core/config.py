@@ -14,5 +14,7 @@ GAME_CONFIGS = {
     "generic": ["Player"],
     "generic_versus": ["Player"],
 
-    "moba": ["Top", "Jungle", "Mid", "ADC", "Support"]
+    "moba": ["Top", "Jungle", "Mid", "ADC", "Support"],
+
+    "one_vs_one": ["Player"],
 }
