@@ -48,5 +48,4 @@ def make_matchup():
         return {
         "games": 0,
         "wins": defaultdict(int),
-        "losses": defaultdict(int)
     }

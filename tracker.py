@@ -35,7 +35,7 @@ GAME_RUNNERS = {
 
 # if no cmd argument
 if len(sys.argv) < 2:
-    with open("input/pingpongnoparents.txt") as f:
+    with open("input/heroshooterversus.txt") as f:
         lines = [line.strip() for line in f if line.strip()]
 # if cmd line argument
 else:
