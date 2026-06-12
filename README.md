@@ -1,4 +1,4 @@
-# Stack Tracker
+# Stack Tracker (OUTDATED. GO TO https://power-level-scouter.vercel.app/)
 This is intended to be used socially; if you are hardcore about your specific stats, there are online trackers that do this better.
 This specifically tracks:
 - Stats for comps of you and your stack
